@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(file:*)",
+      "Bash(unzip -q -c \"Apex-VisionX-Studio-PRD-v2.docx\" word/document.xml)",
+      "Bash(sed 's/<[^>]*>//g')",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest init -d --style new-york --base-color zinc)",
+      "Bash(npx shadcn@latest init -d)"
+    ]
+  }
+}
