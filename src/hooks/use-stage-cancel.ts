@@ -25,7 +25,9 @@ export function useStageCancelHandler(stageNum: number) {
             .update({ status: "cancelled" })
             .eq("id", activeJobId);
         }
-      } catch {}
+      } catch (err) {
+        console.error(`Failed to cancel stage ${stageNum}:`, err);
+      }
     }
     toast("Cancelled");
   }

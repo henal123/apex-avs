@@ -1,13 +1,15 @@
 import { NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { successResponse, notFoundResponse, errorResponse } from "@/lib/api/response";
+import { timingSafeCompare, hashPassword } from "@/lib/api/password";
 
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ shareToken: string }> }
 ) {
   const { shareToken } = await params;
-  const { password } = await request.json();
+  const body = await request.json();
+  const password = typeof body.password === "string" ? body.password : "";
   const supabase = createAdminClient();
 
   const { data: gallery } = await supabase
@@ -19,7 +21,9 @@ export async function POST(
 
   if (!gallery) return notFoundResponse("Gallery");
 
-  if (gallery.password_hash !== password) {
+  // Compare hashed password using timing-safe comparison
+  const inputHash = await hashPassword(password);
+  if (!timingSafeCompare(gallery.password_hash, inputHash)) {
     return errorResponse("INVALID_PASSWORD", "Incorrect password", 401);
   }
 

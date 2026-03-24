@@ -34,12 +34,14 @@ export default function PublicGalleryPage() {
   const [needsPassword, setNeedsPassword] = useState(false);
 
   useEffect(() => {
-    fetchGallery();
+    const controller = new AbortController();
+    fetchGallery(controller.signal);
+    return () => controller.abort();
   }, [shareToken]);
 
-  async function fetchGallery() {
+  async function fetchGallery(signal?: AbortSignal) {
     try {
-      const resp = await fetch(`/api/gallery/${shareToken}`);
+      const resp = await fetch(`/api/gallery/${shareToken}`, { signal });
       const data = await resp.json();
 
       if (!resp.ok) {
@@ -52,7 +54,8 @@ export default function PublicGalleryPage() {
       } else {
         setGallery(data.data);
       }
-    } catch {
+    } catch (err) {
+      console.error("Failed to load gallery:", err);
       setError("Failed to load gallery");
     } finally {
       setIsLoading(false);
@@ -78,7 +81,8 @@ export default function PublicGalleryPage() {
 
       setGallery(data.data);
       setNeedsPassword(false);
-    } catch {
+    } catch (err) {
+      console.error("Gallery verification failed:", err);
       setError("Verification failed");
     } finally {
       setIsLoading(false);

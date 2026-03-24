@@ -34,7 +34,9 @@ export function ConceptCardsGrid() {
     updateBrand(activeBrand.id, { ad_concepts: updated });
     try {
       await axios.patch(`/api/brands/${activeBrand.id}`, { ad_concepts: updated });
-    } catch {}
+    } catch (err) {
+      console.error("Failed to save prompt edit:", err);
+    }
   }
 
   if (concepts.length === 0) {
@@ -167,7 +169,8 @@ function ConceptCard({
               {refAdUrl && (
                 <div className="space-y-1">
                   <Label className="text-[10px]">Reference Ad</Label>
-                  <img src={refAdUrl} alt="Reference" className="h-16 w-16 rounded object-cover border border-border" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={refAdUrl} alt={`Reference ad for ${conceptName || `Concept ${index + 1}`}`} className="h-16 w-16 rounded object-cover border border-border" />
                 </div>
               )}
               {product && (

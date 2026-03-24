@@ -107,7 +107,7 @@ export class AIService {
    */
   static async generateAdConcepts(
     prompt: string,
-    model = "claude-sonnet"
+    model = "claude-sonnet-4-20250514"
   ): Promise<AICallResult<Record<string, unknown>>> {
     const start = Date.now();
     const response = await callClaude(prompt, {

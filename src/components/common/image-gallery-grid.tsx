@@ -92,7 +92,7 @@ export function ImageGalleryGrid({
             {visibleIds.has(image.id) && (
               <Image
                 src={image.src}
-                alt={image.alt || ""}
+                alt={image.alt || "Gallery image"}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
                 sizes={`(max-width: 768px) 50vw, ${Math.round(100 / columns)}vw`}
@@ -121,7 +121,7 @@ export function ImageGalleryGrid({
             <div className="relative aspect-video">
               <Image
                 src={lightboxImage.src}
-                alt={lightboxImage.alt || ""}
+                alt={lightboxImage.alt || "Gallery image preview"}
                 fill
                 className="object-contain"
               />

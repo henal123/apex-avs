@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { successResponse, unauthorizedResponse, validationError } from "@/lib/api/response";
 import { createGallerySchema } from "@/lib/validation/generation";
+import { hashPassword } from "@/lib/api/password";
 
 export async function GET(
   _request: NextRequest,
@@ -49,7 +50,7 @@ export async function POST(
       description: parsed.data.description,
       selected_ad_ids: parsed.data.selected_ad_ids,
       is_password_protected: parsed.data.is_password_protected,
-      password_hash: parsed.data.password || null,
+      password_hash: parsed.data.password ? await hashPassword(parsed.data.password) : null,
       expires_at: parsed.data.expires_at || null,
       created_by: user.id,
     })

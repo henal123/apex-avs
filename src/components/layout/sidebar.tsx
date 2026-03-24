@@ -70,6 +70,8 @@ export function Sidebar() {
           size="sm"
           className="w-full justify-center transition-all duration-200"
           onClick={() => setCollapsed(!collapsed)}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? (
             <ChevronRight className="h-4 w-4" />

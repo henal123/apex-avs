@@ -82,7 +82,9 @@ export function Stage1Container() {
             .update({ status: "cancelled" })
             .eq("id", activeJobId);
         }
-      } catch {}
+      } catch (err) {
+        console.error("Failed to cancel scrape:", err);
+      }
     }
 
     toast("Scrape cancelled");

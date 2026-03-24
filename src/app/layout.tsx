@@ -14,8 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Apex VisionX Studio",
+  title: {
+    default: "Apex VisionX Studio",
+    template: "%s | VisionX Studio",
+  },
   description: "AI-Powered Ad Creative Generation Platform",
+  openGraph: {
+    title: "Apex VisionX Studio",
+    description: "AI-Powered Ad Creative Generation Platform",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Apex VisionX Studio",
+    description: "AI-Powered Ad Creative Generation Platform",
+  },
 };
 
 export default function RootLayout({

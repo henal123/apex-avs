@@ -6,9 +6,10 @@ export async function updateSession(request: NextRequest) {
     request,
   });
 
-  // Skip Supabase auth check if env vars are not configured
+  // Block all requests if Supabase env vars are not configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return supabaseResponse;
+    console.error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
+    return new NextResponse("Server configuration error", { status: 500 });
   }
 
   const supabase = createServerClient(

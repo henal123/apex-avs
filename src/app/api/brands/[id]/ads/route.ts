@@ -51,7 +51,10 @@ export async function GET(
     .range(offset, offset + limit! - 1);
 
   const { data, error, count } = await query;
-  if (error) return successResponse([], buildPaginationMeta(page!, limit!, 0));
+  if (error) {
+    console.error("Failed to fetch ads:", error.message);
+    return errorResponse("DB_ERROR", "Failed to fetch ads", 500);
+  }
 
   return successResponse(data, buildPaginationMeta(page!, limit!, count || 0));
 }
